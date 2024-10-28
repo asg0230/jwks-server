@@ -1,0 +1,22 @@
+-------------------------------------------------------------------------------
+Test set: com.cc.jwks.JWKSServerTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 0.351 s <<< FAILURE! - in com.cc.jwks.JWKSServerTest
+testAuthHandlerWithExpiredKey  Time elapsed: 0.326 s  <<< ERROR!
+java.net.ConnectException
+	at com.cc.jwks.JWKSServerTest.testAuthHandlerWithExpiredKey(JWKSServerTest.java:84)
+Caused by: java.net.ConnectException
+Caused by: java.nio.channels.ClosedChannelException
+
+testAuthHandler  Time elapsed: 0.006 s  <<< ERROR!
+java.net.ConnectException
+	at com.cc.jwks.JWKSServerTest.testAuthHandler(JWKSServerTest.java:66)
+Caused by: java.net.ConnectException
+Caused by: java.nio.channels.ClosedChannelException
+
+testJWKSHandler  Time elapsed: 0.004 s  <<< ERROR!
+java.net.ConnectException
+	at com.cc.jwks.JWKSServerTest.testJWKSHandler(JWKSServerTest.java:48)
+Caused by: java.net.ConnectException
+Caused by: java.nio.channels.ClosedChannelException
+

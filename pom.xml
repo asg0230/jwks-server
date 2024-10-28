@@ -1,21 +1,67 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- POM model version -->
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.yourcompany</groupId>
+
+    <!-- Project coordinates -->
+    <groupId>com.cc</groupId>
     <artifactId>jwks-server</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <!-- Build configuration -->
+    <build>
+        <plugins>
+            <!-- Compiler Plugin to set Java version -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>23</source> <!-- Java source compatibility -->
+                    <target>23</target> <!-- Java target compatibility -->
+                </configuration>
+            </plugin>
+
+            <!-- Surefire Plugin for running unit tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- Project dependencies -->
     <dependencies>
-        <!-- SQLite JDBC Driver -->
+        <!-- SQLite JDBC Driver for database interaction -->
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.36.0.3</version>
         </dependency>
-        <!-- JOSE4J library -->
+
+        <!-- JOSE4J library for JWT and JWK management -->
         <dependency>
             <groupId>org.bitbucket.b_c</groupId>
             <artifactId>jose4j</artifactId>
             <version>0.7.9</version>
+        </dependency>
+
+        <!-- JUnit 5 for unit testing -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.10.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- HttpClient for integration testing -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.13</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>
