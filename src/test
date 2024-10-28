@@ -1,0 +1,96 @@
+package com.cc.jwks;
+
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import static org.junit.Assert.assertEquals;
+
+public class JWKSServerTest {
+
+    @BeforeClass
+    public static void setUp() throws Exception {
+        // Start the server before running tests
+        JWKSServer.main(new String[]{});
+    }
+
+    @AfterClass
+    public static void tearDown() throws Exception {
+        // Optional: Add logic to stop the server if implemented
+    }
+
+    @Test
+    public void testJWKSHandler() throws Exception {
+        // Test the /.well-known/jwks.json endpoint
+        URL url = new URL("http://localhost:8080/.well-known/jwks.json");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+
+        int responseCode = connection.getResponseCode();
+        assertEquals(200, responseCode);
+
+        // Check response content
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+            String inputLine;
+            StringBuilder response = new StringBuilder();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            // Ideally, parse the response to check the JWKS structure
+            String responseBody = response.toString();
+            System.out.println("JWKS Response: " + responseBody);
+            // You can add more assertions here to validate the JSON structure
+        }
+    }
+
+    @Test
+    public void testAuthHandler() throws Exception {
+        // Test the /auth endpoint without the expired query parameter
+        URL url = new URL("http://localhost:8080/auth");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("POST");
+
+        int responseCode = connection.getResponseCode();
+        assertEquals(200, responseCode);
+
+        // Check response content (JWT)
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+            String inputLine;
+            StringBuilder response = new StringBuilder();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            String jwt = response.toString();
+            System.out.println("JWT: " + jwt);
+            // You can add more checks to validate the JWT structure
+        }
+    }
+
+    @Test
+    public void testAuthHandlerWithExpiredKey() throws Exception {
+        // Test the /auth endpoint with the expired query parameter
+        URL url = new URL("http://localhost:8080/auth?expired=true");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("POST");
+
+        int responseCode = connection.getResponseCode();
+        assertEquals(200, responseCode);
+
+        // Check response content (expired JWT)
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+            String inputLine;
+            StringBuilder response = new StringBuilder();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            String jwt = response.toString();
+            System.out.println("Expired JWT: " + jwt);
+            // You can add more checks to validate the JWT structure
+        }
+    }
+}
